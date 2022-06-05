@@ -24,14 +24,35 @@ class Elevator:
         self.speed = speed
         self.name = name
         self.building_name = building_name
+        self.next_floor = None
+        self.floor_list = []
+        
+        assert self.start_height <= self.building_height, "The elevator may not start higher than the top floor."
     
     # Return None for now; essentially pass while developing
     @property
     def dist_to_next(self):
-        return None
+        if self.next_floor:
+            return self.next_floor - self.current_height
+        else:
+            return None
     @property
     def time_to_next(self):
-        return None
+        if self.next_floor:
+            return abs(self.dist_to_next) / self.speed
+        else:
+            return None
+    @property
+    def direction_to_next(self):
+        if self.next_floor:
+            if self.dist_to_next > 0:
+                return "up"
+            elif self.dist_to_next < 0:
+                return "down"
+            else:
+                return "away"
+        else: 
+            return None
     @property
     def sum_dist_to_final(self):
         return None
@@ -41,16 +62,40 @@ class Elevator:
     
     @property
     def report(self):
-        report_string = f"{self.name} is currently on floor {self.current_height} of {self.building_name} with {self.building_height} floors. The next floor is {self.dist_to_next} floors away (ETA = {self.time_to_next} seconds). The final commanded floor is {self.sum_dist_to_final} floors away (ETA = {self.sum_time_to_final} seconds)."
+        """Generates a summary report of the elevator's state and future path.
+        Returns:
+            str: String representation of the summary report
+        """
+        report_string = "\n### REPORT ###\n" + f"{self.name} is currently on floor {self.current_height} of {self.building_name} with {self.building_height} floors." 
+        
+        if self.next_floor:
+            report_string += f" The next floor ({self.next_floor}) is {abs(self.dist_to_next)} floors {self.direction_to_next} (ETA = {self.time_to_next} seconds). The final commanded floor is {self.sum_dist_to_final} floors away (ETA = {self.sum_time_to_final} seconds)."
         return report_string
     
     def __repr__(self) -> str:
         return str(self.report)
     
-    def travel_through_floor_list(floor_list, verbosity=1):
-        pass
+    def travel_through_floor_list(self, floor_list, verbosity=2):
+        # Set the floor_list to be the user-specified inputs list
+        self.floor_list = floor_list
+        # Check the floor list is allowed
+        assert max(self.floor_list) <= self.building_height, "The elevator may never go higher than the top floor."
+        
+        self.final_floor = floor_list[-1]
+        for floor in floor_list:
+            self.next_floor = floor
+            if verbosity > 1:
+                print(self.report)
+            self.current_height = floor
+                
+        # At the end set next_floor to None
+        self.next_floor = None
 
 #####
 # Example instance for prototyping - remove before release!
-Elevator(10,3, name="The Great Glass Elevator")
+e = Elevator(10,10, name="The Great Glass Elevator")
+# print(e.report)
+e.travel_through_floor_list([1,2,3])
+print(e.report)
+
 # %%
