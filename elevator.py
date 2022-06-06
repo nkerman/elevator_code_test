@@ -15,6 +15,27 @@ The elevator cannot go higher than the maximum floor of the building (Z) but it 
 from numpy import diff
 from itertools import groupby
 # %%
+def readable_time_delta(num_seconds: int):
+    """Converts integer number of seconds into a string which is more familiar/interpretable to humans. Only clarifies to the level of hours.
+    Args:
+        num_seconds (int): Number of seconds to convert into a string. Floats work as well, but suggested/type-hinted value is an integer, which works with expected number of seconds for integer floors and fractional speed.
+    """
+    if num_seconds < 60: # seconds range
+        return str(num_seconds)
+    elif num_seconds < 3600: # minutes range
+        s_component = num_seconds % 60
+        m_component = int(num_seconds / 60) # use int to round *down* to nearest int
+        return f"{m_component} minutes {s_component} seconds"
+    elif num_seconds < 24*3600: # hours range
+        s_component = num_seconds % 60
+        m_component = int((num_seconds % (3600)) / 60)
+        h_component = int(num_seconds / 3600)
+        return f"{h_component} hours {m_component} minutes {s_component:.1f} seconds"
+
+# Example func call for prototyping - remove before release!
+b = (3.5*(60**2))+43*60+12.3
+readable_time_delta(b)
+# %%
 class Elevator:
     """An object to simulate an elevator starting on floor X and moving through a building of height Z.
     Args: 
@@ -117,28 +138,7 @@ class Elevator:
 # Example instance for prototyping - remove before release!
 e = Elevator(10,10, name="The Great Glass Elevator", building_name="The Chocolate Factory")
 # print(e.report)
-e.travel_through_floor_list([1,1,1,3,3,5])
+e.travel_through_floor_list([1,1,1,3,3,5,10,2])
 print(e.report)
 
-# %%
-def readable_time_delta(num_seconds: int):
-    """Converts integer number of seconds into a string which is more familiar/interpretable to humans. Only clarifies to the level of hours.
-    Args:
-        num_seconds (int): Number of seconds to convert into a string. Floats work as well, but suggested/type-hinted value is an integer, which works with expected number of seconds for integer floors and fractional speed.
-    """
-    if num_seconds < 60: # seconds range
-        return str(num_seconds)
-    elif num_seconds < 3600: # minutes range
-        s_component = num_seconds % 60
-        m_component = int(num_seconds / 60) # use int to round *down* to nearest int
-        return f"{m_component} minutes {s_component} seconds"
-    elif num_seconds < 24*3600: # hours range
-        s_component = num_seconds % 60
-        m_component = int((num_seconds % (3600)) / 60)
-        h_component = int(num_seconds / 3600)
-        return f"{h_component} hours {m_component} minutes {s_component:.1f} seconds"
-
-# Example func call for prototyping - remove before release!
-b = (3.5*(60**2))+43*60+12.3
-readable_time_delta(b)
 # %%
