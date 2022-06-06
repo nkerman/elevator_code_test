@@ -16,7 +16,7 @@ from numpy import diff
 from itertools import groupby
 # %%
 def readable_time_delta(num_seconds: int):
-    """Converts integer number of seconds into a string which is more familiar/interpretable to humans. Only clarifies to the level of hours. If time is negative, just returns negative number of seconds (as str).
+    """Converts integer number of seconds into a string which is more familiar/interpretable to humans. Only clarifies to the level of hours. If time is negative, just returns negative number of seconds (as str). A helper function which does not make sense to be a method of the Elevator class.
     Args:
         num_seconds (int): Number of seconds to convert into a string. Floats work as well, but suggested/type-hinted value is an integer, which works with expected number of seconds for integer floors and fractional speed.
     """
@@ -50,6 +50,9 @@ class Elevator:
         self.floor_list = []
         self.floor_history = []
         self.floor_future = []
+        self.odometer = 0 # keeps track of distance traveled 
+        # Add the starting position to the floor_history
+        self.floor_history.append(self.current_floor)
         
         assert self.start_floor <= self.building_height, "The elevator may not start higher than the top floor."
     
@@ -117,6 +120,11 @@ class Elevator:
     def travel_through_floor_list(self, floor_list: list, verbosity: int=2):
         # Remove subsequent duplicates in the floor_list; it's not meaningful to go from floor n to the same floor n.
         floor_list = [floor for floor, _group in groupby(floor_list)]
+        assert len(floor_list), "The input list must contain some floors."
+        # If the first requested floor is the current floor, remove it from the list for similar reasons to above.
+        if floor_list[0] == self.current_floor:
+            floor_list = floor_list[1:]
+        assert len(floor_list), "The input list must contain some floors which the elevator is not currently on."
         # Set the floor_list to be the user-specified inputs list. 
         self.floor_list = floor_list
         # The floor_future begins as the same list, and has the visited floors removed from it.
@@ -127,6 +135,7 @@ class Elevator:
         self.final_floor = floor_list[-1]
         for floor in floor_list:
             self.next_floor = floor
+            self.odometer += abs(self.next_floor - self.current_floor) # add distance traveled
             if verbosity > 1:
                 print(self.report)
             # Keep track of where elevator is (current_floor), has been (floor_history), and still needs to go (floor_future).
@@ -138,23 +147,4 @@ class Elevator:
         if verbosity > 0:
             print(self.report)
 
-# %%
-
-"""# %%
-#####
-# Example instance for prototyping - remove before release!
-e = Elevator(10,10, name="The Great Glass Elevator", building_name="The Chocolate Factory")
-# print(e.report)
-e.travel_through_floor_list([1,1,1,3,3,5,10,2])
-print(e.report)
-
-
-# Example func call for prototyping - remove before release!
-b = (3.5*(60**2))+43*60+12.3
-readable_time_delta(b)"""
-# %%
-e = Elevator(10,10, name="The Great Glass Elevator", building_name="The Chocolate Factory")
-# print(e.report)
-e.travel_through_floor_list([1,1,1,3,3,5,10,2], verbosity=1)
-e.travel_through_floor_list((1,2,3))
 # %%
