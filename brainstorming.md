@@ -51,3 +51,19 @@ As per email from Wendy Carande 2022-06-02:
          1. Both numerical types and strings/etc.
    2. Min/max floor
    3. Check expected times
+
+
+## Listed assumptions
+1. Maximum height of the elevator is the top floor (Z) of the building.
+2. All floors are integers. Perhaps a future version of this code could support mezzanine levels as fractional floors; however, it seems a reasonable assumption that all floors can be expected to be integers.
+3. There is no minumum floor; floor 0 is ground and there are as many basement floors as the inputs demand.
+4. There is no acceleration/deceleration.
+5. No time is spent at each stop.
+6. Python version ≥ 3.6 (I will use f-strings).
+7. If a user inputs n invalid value, the desired behavior is a failure with a clear assertion error.
+
+<!-- Add the following so that the PDF renderer will properly format the LaTeX equations -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });
+    </script>
