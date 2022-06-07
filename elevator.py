@@ -156,10 +156,13 @@ class Elevator:
             floor_list (list | tuple of int): The floors to go through. Must contain only integers; Non-integer floors are currently unsupported
             verbosity (int, optional): Whether to print a report at each floor (2+), just at the end of motion (1), or never (0). Defaults to 2.
         """
+        # Make sure the input is iterable like a list or tuple. If a single value, convert it to a list containing that value
+        if not isinstance(floor_list, (list, tuple)):
+            floor_list = [floor_list]
         # Make sure the list isn't empty
         assert len(floor_list), "The input list must contain some floors."
         # Make sure the list contains only integer or integer-equivalent floats.
-        assert check_all_ints(floor_list), "All values in the floor list must be ints or int-valued floats"
+        assert check_all_ints(floor_list), "All values in the floor list must be ints or int-valued floats. "
         # Remove subsequent duplicates in the floor_list; it's not meaningful to go from floor n to the same floor n.
         floor_list = [floor for floor, _group in groupby(floor_list)]
         # If the first requested floor is the current floor, remove it from the list for similar reasons - it doesn't make sense to go from floor X to floor X.
