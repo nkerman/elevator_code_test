@@ -47,3 +47,4 @@ I have built 8 tests into `test_elevator.py`. To run them...
 1. `Python` ≥ 3.6
 2. `numpy`
 3. `pytest` for running tests in `test_elevator.py`
+  * Note that if your version of `pytest` is very old, the tests will still pass but it may return warnings about `distutils` deprecation. These are about a dependency of `pytest`, and don't have anything to do with this code. Updating your environment packages should fix this.
