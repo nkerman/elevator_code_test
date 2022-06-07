@@ -19,7 +19,7 @@ As per email from Wendy Carande *(with key terms highlighted by Nat)*:
 5. No time is spent at each stop.
 6. Python version ≥ 3.6 (I will use f-strings).
 7. If a user inputs an invalid value, the desired behavior is a failure with a clear assertion error.
-8. Given the somewhat nebulous wording of "outputs" in the prompt (an Elevator *class* was requested, and classes have states while methods and functions have outputs), I have opted to store the desired outputs in the state of the object and include a human-readable version in the `__repr__` of the object. This `__repr__` is optionally printed at each floor, and the history of floors, time elapsed, and time to destination is always kept in state.
+8. Given the somewhat unclear wording of "outputs" in the prompt (an Elevator *class* was requested, and classes have states while methods and functions have outputs), I have opted to store the desired outputs in the state of the object and include a human-readable version in the `__repr__` of the object. This `__repr__` is optionally printed at each floor, and the history of floors, time elapsed, and time to destination is always kept in state.
 If a specific *output* were requested, I could happily build a method to output the current floor, time to next floor, etc. for a given state change. In this case, it did not seem the best way to accomplish the goals, and the wording of the task did not seem picky. In a non-test setting, I would discuss this with my client/supervisor and determine the best implementation solution for the task at hand.
 
 ## How to use the Elevator class
@@ -38,7 +38,7 @@ dir(el)
 ```
 
 ## Testing the Elevator object code
-I have built 8 tests into `test_elevator.py`. To run them... 
+I have built 9 tests into `test_elevator.py`. To run them... 
 1. install `pytest`
 2. `cd` into the directory with `elevator.py` and `test_elevator.py`
 3. from the shell, run `pytest -v`

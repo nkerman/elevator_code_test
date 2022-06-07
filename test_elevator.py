@@ -100,6 +100,19 @@ def test_non_integer_floors():
     """Tests that in an Elevator object, non-integer floors fail
     """
     with pytest.raises(AssertionError):
-        # Fails if we try to give an Elevator non-int floors
-        el = Elevator(11,10)
+        # Fails if we try to send an Elevator to non-int floors
+        el = Elevator(10,11)
         el.travel_through_floor_list([1,3,3.1])
+# %%
+def test_non_iterable_inputs():
+    """Tests that the elevator travel function can handle a single value if it is equivalent to an int.
+    """
+    # Succeeds if we give a single int or int equivalent floor value
+    el = Elevator(10,10)
+    el.travel_through_floor_list(5)
+    el.travel_through_floor_list(4.0)
+    with pytest.raises(AssertionError):
+        # Fails if we try to give an a single non-int floor value
+        el = Elevator(11,10)
+        el.travel_through_floor_list(4.2)
+    
