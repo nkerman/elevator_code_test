@@ -36,3 +36,14 @@ To see all the information and methods contained in an Elevator object, create t
 ```python
 dir(el)
 ```
+
+## Testing the Elevator object code
+I have built 8 tests into `test_elevator.py`. To run them... 
+1. install `pytest`
+2. `cd` into the directory with `elevator.py` and `test_elevator.py`
+3. from the shell, run `pytest -v`
+
+## Requirements
+1. `Python` ≥ 3.6
+2. `numpy`
+3. `pytest` for running tests in `test_elevator.py`
