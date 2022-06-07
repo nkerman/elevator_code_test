@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Title: test_elevator.py
 Author: Nat Kerman (nathaniel.kerman@gmail.com)
